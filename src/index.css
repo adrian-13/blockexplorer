@@ -1,0 +1,168 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.block-number {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.block-number.highlight {
+  background-color: rgb(40, 221, 64);
+  color: rgb(32, 32, 30);
+}
+
+.search-block {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 600px; /* Limit the max width of the search block */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-block input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  font-size: 1em;
+}
+
+.search-block input:focus {
+  outline: none;
+}
+
+.search-block button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.search-block button:hover {
+  background-color: #0056b3;
+}
+
+.search-block button:focus {
+  outline: none;
+}
+
+.transactions {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-top: 20px;
+  max-width: 1800px; /* Increase the max width */
+}
+
+.transactions h3 {
+  margin-right: 40px;
+  margin-bottom: 10px;
+  text-align: left; /* Align the heading to the left */
+}
+
+.transactions-list {
+  width: 70%; /* Make the transactions list wider */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  border-right: 1px solid #ccc;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 10px; /* Add some padding for better look */
+}
+
+.transactions-list li {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+  white-space: pre-wrap; /* Wrap the text */
+  word-wrap: break-word; /* Break long words */
+}
+
+.transactions-list button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 1em; /* Increase font size */
+}
+
+.transactions-list button:hover {
+  color: white;
+  background-color: #0056b3;
+}
+
+.transactions-list button:focus {
+  outline: none; /* Remove focus outline */
+}
+
+.transaction-index {
+  margin-right: 10px;
+  font-weight: bold;
+  min-width: 20px; /* Ensure the index has a fixed width for alignment */
+  text-align: right; /* Align the numbers to the right */
+}
+
+.transaction-details {
+  width: 100%; /* Detail section takes the remaining width */
+  margin-left: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  max-height: 600px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.transaction-details h3 {
+  margin-top: 0;
+}
+
+.transaction-details pre {
+  white-space: pre-wrap; /* Wrap the text */
+  word-wrap: break-word; /* Break long words */
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,201 @@
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.blink {
+  animation: blink 0.5s ease-in-out;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: none; /* Skrýt posuvníky pro Firefox */
+  -ms-overflow-style: none; /* Skrýt posuvníky pro Internet Explorer a Edge */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Skrýt posuvníky pro Webkit prohlížeče (Chrome, Safari) */
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Ensure the parent container also takes full width */
+  height: 100vh;
+  padding-top: 50px; /* Adjust padding to move the container down */
+  box-sizing: border-box; /* Ensure padding is included in the height */
+  overflow: auto;
+}
+
+.search-container {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  padding: 20px;
+  margin-bottom: 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+  transition: transform 0.3s ease-in-out; /* Pridanie animácie */
+}
+
+.search-container:hover {
+  transform: translateY(-2px); /* Jemný pohyb nahor pri hover */
+}
+
+.search-container h1 {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.search-block {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px; /* Limit the max width of the search block */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-block input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  font-size: 1em;
+  transition: box-shadow 0.3s; /* Pridanie animácie */
+}
+
+.search-block input:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1); /* Zvýraznenie pri focus */
+}
+
+.search-block button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s; /* Pridanie animácie */
+}
+
+.search-block button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05); /* Mierne zväčšenie pri hover */
+}
+
+.search-block button:focus {
+  outline: none;
+}
+
+.search-block .icon {
+  font-size: 1.2em;
+}
+
+/* Dashboard štýly */
+.dashboard {
+  width: 1000px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 50px;
+  margin-bottom: 100px;
+  border-radius: 10px; /* Remove border radius to stretch to full width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.dashboard h2 {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-wrap: wrap; /* Povolit zalomení řádků */
+  gap: 20px; /* Mezera mezi položkami */
+  max-width: 100%; /* Max šířka dashboardu */
+  margin: 0 auto; /* Vycentrování dashboardu */
+  padding: 10px;
+}
+
+.dashboard-item {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex: 1 1 calc(33.33% - 20px); /* Flexibilní šířka položky, aby byly 3 na řádek s mezery */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease-in-out; /* Pridanie animácie */
+}
+
+.dashboard-item:hover {
+  transform: translateY(-2px); /* Jemný pohyb nahor pri hover */
+}
+
+.dashboard-item .icon {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  color: #007bff;
+}
+
+.dashboard-item p {
+  margin: 0;
+  font-size: 1em;
+  color: #333;
+  font-weight: lighter;
+}
+
+.dashboard-item span {
+  font-weight: bolder;
+}
+
+.search-container h1,
+.dashboard h2 {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #444;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-content p {
+  margin: 10px 0;
+  font-size: 1.2em;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Remove arrows from number input */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* @media (min-width: 768px) {
+  .dashboard-content {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+*/
