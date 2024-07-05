@@ -1,12 +1,15 @@
 import { Alchemy, Network } from "alchemy-sdk";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   FaSearch,
   FaHashtag,
+  FaKey,
+  FaFingerprint,
   FaClock,
   FaCalendarAlt,
   FaUser,
   FaGasPump,
+  FaExchangeAlt,
 } from "react-icons/fa";
 import "./Home.css";
 
@@ -23,6 +26,11 @@ function Home() {
   const [lastBlockTime, setLastBlockTime] = useState(0);
   const [lastMiner, setLastMiner] = useState("");
   const [gasUsed, setGasUsed] = useState(0);
+  const [blockHash, setBlockHash] = useState("");
+  const [nonce, setNonce] = useState("");
+  const [gasLimit, setGasLimit] = useState("");
+  const [transactions, setTransactionCount] = useState(0);
+  const previousBlockNumberRef = useRef("");
 
   useEffect(() => {
     async function getBlockNumberAndTimestamp() {
@@ -33,25 +41,13 @@ function Home() {
           latestBlockNumber - 1
         );
 
+        previousBlockNumberRef.current = blockNumber;
         setBlockNumber(latestBlockNumber);
+        setBlockHash(latestBlock.hash);
         setCurrentBlockTimestamp(
           new Date(latestBlock.timestamp * 1000).toLocaleString()
         );
         setLastBlockTime(latestBlock.timestamp - previousBlock.timestamp); // Time difference between latest block and previous block
-
-        // Přidání animace při aktualizaci hodnot
-        const elements = [
-          document.getElementById("block-number-value"),
-          document.getElementById("last-block-time-value"),
-          document.getElementById("current-block-timestamp-value"),
-          document.getElementById("gas-used-value"),
-          document.getElementById("last-miner-value"),
-        ];
-
-        elements.forEach((element) => {
-          element.classList.add("blink");
-          setTimeout(() => element.classList.remove("blink"), 500);
-        });
       } catch (error) {
         console.error("Failed to fetch block number or timestamp:", error);
       }
@@ -59,10 +55,10 @@ function Home() {
 
     getBlockNumberAndTimestamp();
 
-    const interval = setInterval(getBlockNumberAndTimestamp, 10000); // Update every 10 seconds
+    const interval = setInterval(getBlockNumberAndTimestamp, 1000); // Update every 10 seconds
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, []);
+  }, [blockNumber]);
 
   useEffect(() => {
     async function getMiner() {
@@ -70,16 +66,52 @@ function Home() {
         const latestBlockInfo = await alchemy.core.getBlockWithTransactions(
           blockNumber
         );
-        const gas = parseInt(latestBlockInfo.gasUsed._hex);
-        setGasUsed(gas);
-        setLastMiner(latestBlockInfo.miner);
+
+        setGasUsed(parseInt(latestBlockInfo.gasUsed._hex)); // Gas used
+        setGasLimit(parseInt(latestBlockInfo.gasLimit._hex)); // Gas Limit
+        setLastMiner(latestBlockInfo.miner); // Minner
+        setNonce(latestBlockInfo.nonce); // Nonce
+        setTransactionCount(latestBlockInfo.transactions.length); // Number of transactions
       } catch (error) {
         console.error("Failed to fetch blocks miner.");
       }
     }
 
-    getMiner();
+    if (blockNumber) {
+      getMiner();
+    }
   }, [blockNumber]);
+
+  useEffect(() => {
+    if (
+      blockNumber !== previousBlockNumberRef.current &&
+      blockNumber > previousBlockNumberRef.current
+    ) {
+      // Přidání animace při zvýšení čísla bloku
+      const elements = [
+        document.getElementById("block-number-value"),
+        document.getElementById("last-block-time-value"),
+        document.getElementById("current-block-timestamp-value"),
+        document.getElementById("gas-used-value"),
+        document.getElementById("last-miner-value"),
+        document.getElementById("block-hash-value"),
+      ];
+
+      elements.forEach((element) => {
+        if (element) {
+          element.classList.add("blink");
+          setTimeout(() => element.classList.remove("blink"), 500);
+        }
+      });
+    }
+  }, [
+    blockNumber,
+    lastBlockTime,
+    currentBlockTimestamp,
+    gasUsed,
+    lastMiner,
+    blockHash,
+  ]);
 
   return (
     <div className="home">
@@ -102,21 +134,32 @@ function Home() {
           <div className="dashboard-item">
             <FaHashtag className="icon" />
             <p>
-              Block number:<br></br>{" "}
-              <span id="block-number-value">{blockNumber}</span>
+              Block number: <span id="block-number-value">{blockNumber}</span>
+            </p>
+          </div>
+          <div className="dashboard-item">
+            <FaFingerprint className="icon" />
+            <p>
+              Block hash: <span id="block-hash-value">{blockHash}</span>
+            </p>
+          </div>
+          <div className="dashboard-item">
+            <FaKey className="icon" />
+            <p>
+              Nonce: <span id="block-hash-value">{nonce}</span>
             </p>
           </div>
           <div className="dashboard-item">
             <FaClock className="icon" />
             <p>
-              Time:<br></br>{" "}
+              Block interval:{" "}
               <span id="last-block-time-value">{lastBlockTime} seconds</span>
             </p>
           </div>
           <div className="dashboard-item">
             <FaCalendarAlt className="icon" />
             <p>
-              Timestamp:<br></br>{" "}
+              Timestamp:{" "}
               <span id="current-block-timestamp-value">
                 {currentBlockTimestamp}
               </span>
@@ -125,13 +168,26 @@ function Home() {
           <div className="dashboard-item">
             <FaGasPump className="icon" />
             <p>
-              Gas used:<br></br> <span id="gas-used-value">{gasUsed}</span>
+              Gas limit: <span id="block-hash-value">{gasLimit}</span>
+            </p>
+          </div>
+          <div className="dashboard-item">
+            <FaGasPump className="icon" />
+            <p>
+              Gas used: <span id="gas-used-value">{gasUsed}</span>
             </p>
           </div>
           <div className="dashboard-item">
             <FaUser className="icon" />
             <p>
-              Miner:<br></br> <span id="last-miner-value">{lastMiner}</span>
+              Miner: <span id="last-miner-value">{lastMiner}</span>
+            </p>
+          </div>
+          <div className="dashboard-item">
+            <FaExchangeAlt className="icon" />
+            <p>
+              Transactions:{" "}
+              <span id="last-miner-value">{transactions} transactions</span>
             </p>
           </div>
         </div>

@@ -1,17 +1,3 @@
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
-.blink {
-  animation: blink 0.5s ease-in-out;
-}
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -45,11 +31,11 @@ body::-webkit-scrollbar {
   margin-bottom: 50px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
-  transition: transform 0.3s ease-in-out; /* Pridanie animácie */
+  transition: transform 0.3s ease-in-out; /* Přidání animace */
 }
 
 .search-container:hover {
-  transform: translateY(-2px); /* Jemný pohyb nahor pri hover */
+  transform: translateY(-2px); /* Jemný pohyb nahoru při hover */
 }
 
 .search-container h1 {
@@ -74,12 +60,12 @@ body::-webkit-scrollbar {
   border: none;
   border-radius: 4px 0 0 4px;
   font-size: 1em;
-  transition: box-shadow 0.3s; /* Pridanie animácie */
+  transition: box-shadow 0.3s; /* Přidání animace */
 }
 
 .search-block input:focus {
   outline: none;
-  box-shadow: 0 0 5px rgba(81, 203, 238, 1); /* Zvýraznenie pri focus */
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1); /* Zvýraznění při focus */
 }
 
 .search-block button {
@@ -89,12 +75,12 @@ body::-webkit-scrollbar {
   border: none;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s; /* Pridanie animácie */
+  transition: background-color 0.3s, transform 0.3s; /* Přidání animace */
 }
 
 .search-block button:hover {
   background-color: #0056b3;
-  transform: scale(1.05); /* Mierne zväčšenie pri hover */
+  transform: scale(1.05); /* Mírné zvětšení při hover */
 }
 
 .search-block button:focus {
@@ -105,13 +91,14 @@ body::-webkit-scrollbar {
   font-size: 1.2em;
 }
 
-/* Dashboard štýly */
+/* Dashboard styly */
 .dashboard {
-  width: 1000px;
+  width: 100%;
+  max-width: 1200px;
   background-color: rgba(255, 255, 255, 0.8);
   padding: 50px;
   margin-bottom: 100px;
-  border-radius: 10px; /* Remove border radius to stretch to full width */
+  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
@@ -124,8 +111,8 @@ body::-webkit-scrollbar {
 
 .dashboard-content {
   display: flex;
-  flex-wrap: wrap; /* Povolit zalomení řádků */
-  gap: 20px; /* Mezera mezi položkami */
+  flex-direction: column; /* Vertikální uspořádání položek */
+  gap: 5px; /* Mezera mezi položkami */
   max-width: 100%; /* Max šířka dashboardu */
   margin: 0 auto; /* Vycentrování dashboardu */
   padding: 10px;
@@ -136,22 +123,21 @@ body::-webkit-scrollbar {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  flex: 1 1 calc(33.33% - 20px); /* Flexibilní šířka položky, aby byly 3 na řádek s mezery */
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Horizontální uspořádání ikony a textu */
   align-items: center;
-  text-align: center;
-  transition: transform 0.3s ease-in-out; /* Pridanie animácie */
+  justify-content: left; /* Vycentrování obsahu */
+  text-align: left;
+  transition: transform 0.3s ease-in-out; /* Přidání animace */
 }
 
 .dashboard-item:hover {
-  transform: translateY(-2px); /* Jemný pohyb nahor pri hover */
+  transform: translateY(-2px); /* Jemný pohyb nahoru při hover */
 }
 
 .dashboard-item .icon {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-  margin-top: 20px;
+  font-size: 1.2em;
+  margin-right: 20px; /* Mezera mezi ikonou a textem */
   color: #007bff;
 }
 
@@ -186,16 +172,3 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-/* @media (min-width: 768px) {
-  .dashboard-content {
-    flex-direction: row;
-    justify-content: space-around;
-  }
-}
-
-*/
