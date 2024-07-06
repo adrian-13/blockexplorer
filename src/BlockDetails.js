@@ -32,7 +32,6 @@ function BlockDetails() {
   const [nonce, setNonce] = useState("");
   const [gasLimit, setGasLimit] = useState("");
   const [transactions, setTransactionCount] = useState(0);
-  const previousBlockNumberRef = useRef("");
   const history = useHistory();
 
   useEffect(() => {
