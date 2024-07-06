@@ -40,7 +40,7 @@ body::-webkit-scrollbar {
 
 .search-container h1 {
   margin-bottom: 20px;
-  font-size: 1.5em;
+  font-size: 1.2em;
   color: #333;
 }
 
@@ -91,7 +91,7 @@ body::-webkit-scrollbar {
   font-size: 1.2em;
 }
 
-/* Dashboard styly */
+/* <--- Dashboard styly  ---> */
 .dashboard {
   width: 100%;
   max-width: 1200px;
@@ -103,10 +103,28 @@ body::-webkit-scrollbar {
   text-align: center;
 }
 
+.dashboard-group {
+  margin-bottom: 30px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-group h3 {
+  margin-bottom: 10px;
+  font-size: 1em;
+  color: #444;
+  text-align: left;
+  margin-left: 30px;
+}
+
 .dashboard h2 {
   margin-bottom: 20px;
-  font-size: 1.5em;
+  font-size: 1.2em;
   color: #333;
+  text-align: left;
+  margin-left: 30px;
 }
 
 .dashboard-content {
@@ -120,9 +138,8 @@ body::-webkit-scrollbar {
 
 .dashboard-item {
   background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-left: 20px;
   display: flex;
   flex-direction: row; /* Horizontální uspořádání ikony a textu */
   align-items: center;
@@ -136,14 +153,13 @@ body::-webkit-scrollbar {
 }
 
 .dashboard-item .icon {
-  font-size: 1.2em;
+  font-size: 1.1em;
   margin-right: 20px; /* Mezera mezi ikonou a textem */
   color: #007bff;
 }
 
 .dashboard-item p {
   margin: 0;
-  font-size: 1em;
   color: #333;
   font-weight: lighter;
 }
@@ -161,7 +177,7 @@ body::-webkit-scrollbar {
 
 .dashboard-content p {
   margin: 10px 0;
-  font-size: 1.2em;
+  font-size: 1.1em;
   color: #333;
   line-height: 1.5;
 }

@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   padding: 0;
-  background-image: url("../images/home_bg.JPG"); /* Add the path to your background image */
+  background-image: url("../images/home_bg.jpg"); /* Add the path to your background image */
   background-size: cover;
   background-position: center;
 }
