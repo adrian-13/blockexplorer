@@ -1,5 +1,5 @@
 import { Alchemy, Network } from "alchemy-sdk";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom";
 import {
   FaSearch,
