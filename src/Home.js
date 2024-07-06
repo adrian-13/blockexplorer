@@ -100,7 +100,7 @@ function Home() {
         </div>
       </div>
       <div className="dashboard">
-        <h2>Latest Block Information</h2>
+        <h2>Latest Block</h2>
         <div className="dashboard-content">
           {/* Block Information Group */}
           <div className="dashboard-group">
