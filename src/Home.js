@@ -1,5 +1,6 @@
 import { Alchemy, Network } from "alchemy-sdk";
 import { useEffect, useState, useRef } from "react";
+import { useHistory, Link } from "react-router-dom";
 import {
   FaSearch,
   FaHashtag,
@@ -21,6 +22,7 @@ const settings = {
 const alchemy = new Alchemy(settings);
 
 function Home() {
+  const [blockNumberInput, setBlockNumberInput] = useState(""); // State for user input
   const [blockNumber, setBlockNumber] = useState("");
   const [currentBlockTimestamp, setCurrentBlockTimestamp] = useState("");
   const [lastBlockTime, setLastBlockTime] = useState(0);
@@ -31,6 +33,7 @@ function Home() {
   const [gasLimit, setGasLimit] = useState("");
   const [transactions, setTransactionCount] = useState(0);
   const previousBlockNumberRef = useRef("");
+  const history = useHistory();
 
   useEffect(() => {
     async function getBlockNumberAndTimestamp() {
@@ -84,22 +87,31 @@ function Home() {
     }
   }, [blockNumber]);
 
+  const handleSearch = () => {
+    if (blockNumberInput) {
+      history.push(`/block/${blockNumberInput}`);
+    }
+  };
+
   return (
     <div className="home">
-      <div className="search-container">
-        <h1>The Ethereum Blockchain Explorer</h1>
-        <div className="search-block">
-          <input
-            type="number"
-            placeholder="Search by Address / Txn Hash / Block"
-            onChange={(e) => setBlockNumber(e.target.value)}
-          />
-          <button onClick={() => {}}>
-            <FaSearch className="icon" />
-          </button>
-        </div>
-      </div>
       <div className="dashboard">
+        <Link to="/" className="title-link">
+          <h1 className="title">Ethereum Insider</h1>
+        </Link>
+        <p className="subtitle">The Ethereum Blockchain Explorer</p>
+        <div className="search-container">
+          <div className="search-block">
+            <input
+              type="number"
+              placeholder="Search by Address / Txn Hash / Block"
+              onChange={(e) => setBlockNumberInput(e.target.value)}
+            />
+            <button onClick={handleSearch}>
+              <FaSearch className="icon" />
+            </button>
+          </div>
+        </div>
         <h2>Latest Block</h2>
         <div className="dashboard-content">
           {/* Block Information Group */}
@@ -174,7 +186,7 @@ function Home() {
               <p>
                 Transactions:{" "}
                 <span id="transaction-count-value">
-                  {transactions} tansactions
+                  {transactions} transactions
                 </span>
               </p>
             </div>

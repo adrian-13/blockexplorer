@@ -25,23 +25,25 @@ body::-webkit-scrollbar {
 }
 
 .search-container {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-  padding: 20px;
+  text-align: left; /* Zarovnanie textu vľavo */
+  padding-left: 20px;
   margin-bottom: 50px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
   transition: transform 0.3s ease-in-out; /* Přidání animace */
+  display: flex;
+  flex-direction: column; /* Ensure column layout */
+  align-items: flex-start; /* Align items to the start (left) */
 }
 
 .search-container:hover {
   transform: translateY(-2px); /* Jemný pohyb nahoru při hover */
 }
 
-.search-container h1 {
-  margin-bottom: 20px;
-  font-size: 1.2em;
-  color: #333;
+.search-container .divider {
+  width: 80%;
+  height: 1px;
+  background-color: #ccc;
+  margin: 20px 0; /* Space around the divider */
 }
 
 .search-block {
@@ -52,6 +54,7 @@ body::-webkit-scrollbar {
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 4px;
+  margin-left: 0; /* Align the search block to the left */
 }
 
 .search-block input {
@@ -89,6 +92,44 @@ body::-webkit-scrollbar {
 
 .search-block .icon {
   font-size: 1.2em;
+}
+
+/* <--- Title styles --->  */
+.dashboard h1 {
+  text-align: left; /* Zarovnanie textu vľavo */
+  margin-left: 20px;
+  margin-bottom: 10px;
+  font-size: 2.5em; /* Larger font size */
+  color: #333;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow for better readability */
+}
+
+.title-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.title-link h1 {
+  cursor: pointer;
+}
+
+.subtitle {
+  font-size: 1.1em;
+  color: #555;
+  text-align: left;
+  margin-top: 0px;
+  margin-left: 20px;
+  margin-bottom: 50px;
+  font-weight: lighter;
+}
+
+.block-details h1 {
+  font-size: 2em;
+  text-align: center;
+}
+
+.title-link h1 {
+  cursor: pointer;
 }
 
 /* <--- Dashboard styly  ---> */
