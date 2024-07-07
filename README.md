@@ -14,6 +14,10 @@ Key features of the project include:
 
 This project is still in development, and more features will be added soon.
 
+## Project URL
+
+You can access the live version of the project [here](https://ethereuminsight.netlify.app/).
+
 ### Project Origin
 
 This project was created as an assignment for a course at **Alchemy University**, where students gain practical experience using the Alchemy SDK and developing decentralized applications.
