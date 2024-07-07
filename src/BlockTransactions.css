@@ -13,13 +13,6 @@ body::-webkit-scrollbar {
   display: none; /* Skrýt posuvníky pro Webkit prohlížeče (Chrome, Safari) */
 }
 
-.header {
-  display: flex;
-  justify-content: space-between; /* Distribute space between items */
-  align-items: center;
-  width: 100%; /* Ensure header takes full width */
-}
-
 .home {
   display: flex;
   flex-direction: column;
@@ -29,13 +22,6 @@ body::-webkit-scrollbar {
   padding-top: 50px; /* Adjust padding to move the container down */
   box-sizing: border-box; /* Ensure padding is included in the height */
   overflow: auto;
-}
-
-.logo {
-  width: 70px; /* Adjust the size as needed */
-  height: auto;
-  margin-right: 50px;
-  margin-top: 30px;
 }
 
 .search-container {
@@ -243,11 +229,76 @@ body::-webkit-scrollbar {
   color: #444;
 }
 
-/* <--- Transaction Details ---> */
-.transaction-details p {
-  white-space: pre-wrap; /* Ensure long lines are wrapped */
-  word-wrap: break-word; /* Break words at the end of the line */
-  max-width: 100ch;
+/* <--- Transactions table ---> */
+.block-transactions {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: auto;
+  overflow-x: auto;
+}
+
+.block-transactions h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.block-transactions table {
+  max-width: 1200px;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.block-transactions th,
+.block-transactions td {
+  max-width: 320px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  text-align: center;
+  font-weight: lighter;
+  white-space: nowrap; /* Ensure text does not wrap */
+  overflow: hidden; /* Ensure content does not overflow */
+  text-overflow: ellipsis; /* Display ellipsis for overflowing text */
+  max-width: auto; /* Adjust the width as needed */
+  cursor: pointer; /* Change cursor to indicate clickable */
+}
+
+.block-transactions th {
+  background-color: #f4f4f4;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-align: center;
+}
+
+td a {
+  text-decoration: none;
+  color: #444;
+}
+
+.block-transactions tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.block-transactions tr:hover {
+  background-color: #f1f1f1;
+}
+
+.block-transactions .copied {
+  background-color: #d4edda; /* Light green background for copied text */
+  color: #155724; /* Dark green text color */
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+.back-link:hover {
+  color: #0056b3;
 }
 
 /* Remove arrows from number input */

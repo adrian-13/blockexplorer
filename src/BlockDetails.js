@@ -13,6 +13,7 @@ import {
   FaExchangeAlt,
 } from "react-icons/fa";
 import "./Home.css";
+import logo from "../src/assets/ethereum_logo.png";
 
 const settings = {
   apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
@@ -84,9 +85,12 @@ function BlockDetails() {
   return (
     <div className="home">
       <div className="dashboard">
-        <Link to="/" className="title-link">
-          <h1>Ethereum Insider</h1>
-        </Link>
+        <div className="header">
+          <Link to="/" className="title-link">
+            <h1 className="title">Ethereum Insider</h1>
+          </Link>
+          <img src={logo} alt="Logo" className="logo" />
+        </div>
         <p className="subtitle">The Ethereum Blockchain Explorer</p>
         <div className="search-container">
           <div className="search-block">
@@ -173,9 +177,15 @@ function BlockDetails() {
               <FaExchangeAlt className="icon" />
               <p>
                 Transactions:{" "}
-                <span id="transaction-count-value">
-                  {transactions} tansactions
-                </span>
+                <Link
+                  to={`/block/${blockNumber}/transactions`}
+                  className="link"
+                >
+                  {" "}
+                  <span id="transaction-count-value">
+                    {transactions} transactions
+                  </span>
+                </Link>
               </p>
             </div>
           </div>
