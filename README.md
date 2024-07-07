@@ -1,6 +1,6 @@
 # Ethereum Insider
 
-<img src="./src/assets/ethereum_logo.png" alt="Ethereum Logo" width="100" height="100">
+<img src="./src/assets/ethereum_logo.png" alt="Ethereum Logo" width="100" height=auto>
 
 ## Project Description
 
