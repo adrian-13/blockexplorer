@@ -61,16 +61,17 @@ yarn install
 The application will run on http://localhost:3000.
 
 ### Project Structure
-src/: Main source code of the application.
-components/: React components used in the application.
-assets/: Static files and images.
-styles/: CSS files for styling the application.
-App.js: Main application file.
-index.js: Entry point of the application.
-Home.js: Component for displaying the home page.
-BlockDetails.js: Component for displaying block details.
-BlockTransactions.js: Component for displaying transactions in a block.
-TransactionDetails.js: Component for displaying transaction details.
+
+- src/: Main source code of the application.
+- components/: React components used in the application.
+- assets/: Static files and images.
+- styles/: CSS files for styling the application.
+- App.js: Main application file.
+- index.js: Entry point of the application.
+- Home.js: Component for displaying the home page.
+- BlockDetails.js: Component for displaying block details.
+- BlockTransactions.js: Component for displaying transactions in a block.
+- TransactionDetails.js: Component for displaying transaction details.
 
 ### Contributing
 Contributions are welcome! If you are interested in contributing to the project, please open a pull request or create an issue on GitHub.
