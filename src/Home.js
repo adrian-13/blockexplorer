@@ -1,6 +1,6 @@
 import { Alchemy, Network } from "alchemy-sdk";
 import { useEffect, useState, useRef } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   FaSearch,
   FaHashtag,
@@ -23,7 +23,6 @@ const settings = {
 const alchemy = new Alchemy(settings);
 
 function Home() {
-  const [blockNumberInput, setBlockNumberInput] = useState(""); // State for user input
   const [blockNumber, setBlockNumber] = useState("");
   const [currentBlockTimestamp, setCurrentBlockTimestamp] = useState("");
   const [lastBlockTime, setLastBlockTime] = useState(0);
@@ -34,9 +33,15 @@ function Home() {
   const [gasLimit, setGasLimit] = useState("");
   const [transactions, setTransactionCount] = useState(0);
   const previousBlockNumberRef = useRef("");
-  const history = useHistory();
+  const [inputValue, setInputValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // State for error message
+  const [showError, setShowError] = useState(false); // State to control error message visibility
+  const timerRef = useRef(null); // Ref to store the timer ID
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+
     async function getBlockNumberAndTimestamp() {
       try {
         const latestBlockNumber = await alchemy.core.getBlockNumber();
@@ -45,53 +50,113 @@ function Home() {
           latestBlockNumber - 1
         );
 
-        previousBlockNumberRef.current = blockNumber;
-        setBlockNumber(latestBlockNumber);
-        setBlockHash(latestBlock.hash);
-        setCurrentBlockTimestamp(
-          new Date(latestBlock.timestamp * 1000).toLocaleString()
-        );
-        setLastBlockTime(latestBlock.timestamp - previousBlock.timestamp); // Time difference between latest block and previous block
+        if (isMounted) {
+          previousBlockNumberRef.current = blockNumber;
+          setBlockNumber(latestBlockNumber);
+          setBlockHash(latestBlock.hash);
+          setCurrentBlockTimestamp(
+            new Date(latestBlock.timestamp * 1000).toLocaleString()
+          );
+          setLastBlockTime(latestBlock.timestamp - previousBlock.timestamp); // Time difference between latest block and previous block
+        }
       } catch (error) {
-        console.error("Failed to fetch block number or timestamp:", error);
+        if (isMounted) {
+          console.error("Failed to fetch block number or timestamp:", error);
+        }
+      } finally {
+        setLoading(false);
       }
     }
 
     getBlockNumberAndTimestamp();
 
-    const interval = setInterval(getBlockNumberAndTimestamp, 1000); // Update every 10 seconds
+    const interval = setInterval(getBlockNumberAndTimestamp, 10000); // Update every 10 seconds
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, [blockNumber]);
 
   useEffect(() => {
+    let isMounted = true;
+
     async function getBlockDetails() {
       try {
         const latestBlockInfo = await alchemy.core.getBlockWithTransactions(
           blockNumber
         );
-        // Gas used
-        const gasUsed = parseInt(latestBlockInfo.gasUsed._hex);
-        setGasUsed(gasUsed.toLocaleString());
-        const gasLimit = parseInt(latestBlockInfo.gasLimit._hex);
-        setGasLimit(gasLimit.toLocaleString()); // Gas Limit
-        setLastMiner(latestBlockInfo.miner); // Minner
-        setNonce(latestBlockInfo.nonce); // Nonce
-        setTransactionCount(latestBlockInfo.transactions.length); // Number of transactions
+        if (isMounted) {
+          // Gas used
+          const gasUsed = parseInt(latestBlockInfo.gasUsed._hex);
+          setGasUsed(gasUsed.toLocaleString());
+          const gasLimit = parseInt(latestBlockInfo.gasLimit._hex);
+          setGasLimit(gasLimit.toLocaleString()); // Gas Limit
+          setLastMiner(latestBlockInfo.miner); // Miner
+          setNonce(latestBlockInfo.nonce); // Nonce
+          setTransactionCount(latestBlockInfo.transactions.length); // Number of transactions
+        }
       } catch (error) {
-        console.error("Failed to fetch blocks miner.");
+        if (isMounted) {
+          console.error("Failed to fetch block miner.");
+        }
+      } finally {
+        setLoading(false);
       }
     }
 
     if (blockNumber) {
       getBlockDetails();
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [blockNumber]);
 
-  const handleSearch = () => {
-    if (blockNumberInput) {
-      history.push(`/block/${blockNumberInput}`);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleInputSearch = () => {
+    const input = inputValue.trim();
+
+    if (isNumeric(input)) {
+      window.location.href = `/block/${input}`;
+    } else {
+      if (input.length === 0) {
+        setErrorMessage(
+          "You did not enter any input. Please provide the required data and try again."
+        );
+        setShowError(true); // Show error message
+      } else if (input.length === 42) {
+        console.log("Address: ", input);
+        // TODO
+      } else if (input.length === 66) {
+        console.log("Hash: ", input);
+        window.location.href = `/block/${blockNumber}/transactions/${input}`;
+      } else {
+        setErrorMessage(
+          "The entered format is incorrect. Please check your input and try the search again."
+        );
+        setShowError(true); // Show error message
+      }
     }
+    // Hide the error message after 3 seconds
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = setTimeout(() => {
+      setShowError(false);
+    }, 3000);
+  };
+
+  const isNumeric = (input) => {
+    return /^\d+$/.test(input);
   };
 
   return (
@@ -101,20 +166,29 @@ function Home() {
           <Link to="/" className="title-link">
             <h1 className="title">Ethereum Insider</h1>
           </Link>
-          <img src={logo} alt="Logo" className="logo" />
+          <Link to="/" className="title-link">
+            <img src={logo} alt="Logo" className="logo" />
+          </Link>
         </div>
         <p className="subtitle">The Ethereum Blockchain Explorer</p>
         <div className="search-container">
           <div className="search-block">
             <input
-              type="number"
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              className="search-box"
               placeholder="Search by Address / Txn Hash / Block"
-              onChange={(e) => setBlockNumberInput(e.target.value)}
             />
-            <button onClick={handleSearch}>
+            <button onClick={handleInputSearch}>
               <FaSearch className="icon" />
             </button>
           </div>
+          {errorMessage && (
+            <p className={`error-message ${showError ? "" : "hide"}`}>
+              {errorMessage}
+            </p>
+          )}
         </div>
         <h2>Latest Block</h2>
         <div className="dashboard-content">
@@ -124,7 +198,12 @@ function Home() {
             <div className="dashboard-item">
               <FaHashtag className="icon" />
               <p>
-                Block number: <span id="block-number-value">{blockNumber}</span>
+                Block number:{" "}
+                {blockNumber && (
+                  <Link to={`/block/${blockNumber}`} className="link">
+                    <span id="block-number-value">{blockNumber}</span>
+                  </Link>
+                )}
               </p>
             </div>
             <div className="dashboard-item">
@@ -193,7 +272,6 @@ function Home() {
                   to={`/block/${blockNumber}/transactions`}
                   className="link"
                 >
-                  {" "}
                   <span id="transaction-count-value">
                     {transactions} transactions
                   </span>

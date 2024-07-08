@@ -13,6 +13,13 @@ body::-webkit-scrollbar {
   display: none; /* Skrýt posuvníky pro Webkit prohlížeče (Chrome, Safari) */
 }
 
+.header {
+  display: flex;
+  justify-content: space-between; /* Distribute space between items */
+  align-items: center;
+  width: 100%; /* Ensure header takes full width */
+}
+
 .home {
   display: flex;
   flex-direction: column;
@@ -22,6 +29,13 @@ body::-webkit-scrollbar {
   padding-top: 50px; /* Adjust padding to move the container down */
   box-sizing: border-box; /* Ensure padding is included in the height */
   overflow: auto;
+}
+
+.logo {
+  width: 70px; /* Adjust the size as needed */
+  height: auto;
+  margin-right: 50px;
+  margin-top: 30px;
 }
 
 .search-container {
@@ -92,6 +106,17 @@ body::-webkit-scrollbar {
 
 .search-block .icon {
   font-size: 1.2em;
+}
+
+/* <--- Error message ---> */
+.error-message {
+  color: red;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.error-message.hide {
+  opacity: 0;
 }
 
 /* <--- Title styles --->  */

@@ -62,7 +62,9 @@ function TransactionDetails() {
           <Link to="/" className="title-link">
             <h1 className="title">Ethereum Insider</h1>
           </Link>
-          <img src={logo} alt="Logo" className="logo" />
+          <Link to="/" className="title-link">
+            <img src={logo} alt="Logo" className="logo" />
+          </Link>
         </div>
         <p className="subtitle">The Ethereum Blockchain Explorer</p>
         <Link

@@ -108,6 +108,17 @@ body::-webkit-scrollbar {
   font-size: 1.2em;
 }
 
+/* <--- Error message ---> */
+.error-message {
+  color: red;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.error-message.hide {
+  opacity: 0;
+}
+
 /* <--- Title styles --->  */
 .dashboard h1 {
   text-align: left; /* Zarovnanie textu vľavo */

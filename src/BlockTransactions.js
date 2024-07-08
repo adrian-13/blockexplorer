@@ -1,9 +1,9 @@
-import { Alchemy, Network } from "alchemy-sdk";
-import { useEffect, useState } from "react";
-import { useParams, useHistory, Link } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { useParams, Link } from "react-router-dom";
 import { FaSearch, FaArrowLeft } from "react-icons/fa";
 import "./BlockTransactions.css";
 import logo from "../src/assets/ethereum_logo.png";
+import { Alchemy, Network } from "alchemy-sdk";
 
 const settings = {
   apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
@@ -13,10 +13,13 @@ const settings = {
 const alchemy = new Alchemy(settings);
 
 function BlockTransactions() {
-  const [blockNumberInput, setBlockNumberInput] = useState(""); // State for user input
   const { blockNumber } = useParams();
   const [transactions, setTransactions] = useState([]);
-  const history = useHistory();
+  const [inputValue, setInputValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // State for error message
+  const [showError, setShowError] = useState(false); // State to control error message visibility
+  const timerRef = useRef(null); // Ref to store the timer ID
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getBlockDetails() {
@@ -31,6 +34,8 @@ function BlockTransactions() {
         }
       } catch (error) {
         console.error("Failed to fetch block transactions.", error);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -39,10 +44,51 @@ function BlockTransactions() {
     }
   }, [blockNumber]);
 
-  const handleSearch = () => {
-    if (blockNumberInput) {
-      history.push(`/block/${blockNumberInput}`);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleInputSearch = () => {
+    const input = inputValue.trim();
+    setErrorMessage(""); // Clear previous error message
+    setShowError(false); // Hide error message initially
+
+    if (isNumeric(input)) {
+      window.location.href = `/block/${input}`;
+    } else {
+      if (input.length === 0) {
+        setErrorMessage(
+          "You did not enter any input. Please provide the required data and try again."
+        );
+        setShowError(true); // Show error message
+      } else if (input.length === 42) {
+        console.log("Address: ", input);
+        // TODO
+      } else if (input.length === 66) {
+        console.log("Hash: ", input);
+        window.location.href = `/block/${blockNumber}/transactions/${input}`;
+      } else {
+        setErrorMessage(
+          "The entered format is incorrect. Please check your input and try the search again."
+        );
+        setShowError(true); // Show error message
+      }
     }
+    // Hide the error message after 3 seconds
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = setTimeout(() => {
+      setShowError(false);
+    }, 3000);
+  };
+
+  const isNumeric = (input) => {
+    return /^\d+$/.test(input);
   };
 
   return (
@@ -52,20 +98,29 @@ function BlockTransactions() {
           <Link to="/" className="title-link">
             <h1 className="title">Ethereum Insider</h1>
           </Link>
-          <img src={logo} alt="Logo" className="logo" />
+          <Link to="/" className="title-link">
+            <img src={logo} alt="Logo" className="logo" />
+          </Link>
         </div>
         <p className="subtitle">The Ethereum Blockchain Explorer</p>
         <div className="search-container">
           <div className="search-block">
             <input
-              type="number"
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              className="search-box"
               placeholder="Search by Address / Txn Hash / Block"
-              onChange={(e) => setBlockNumberInput(e.target.value)}
             />
-            <button onClick={handleSearch}>
+            <button onClick={handleInputSearch}>
               <FaSearch className="icon" />
             </button>
           </div>
+          {errorMessage && (
+            <p className={`error-message ${showError ? "" : "hide"}`}>
+              {errorMessage}
+            </p>
+          )}
         </div>
         <h2>Transactions for block #{blockNumber}</h2>
         <Link to={`/block/${blockNumber}`} className="back-link">
