@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import "./Home.css";
 import logo from "../src/assets/ethereum_logo.png";
+import Loading from "../src/Loading.js"; // Import the Loading component
 
 const settings = {
   apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
@@ -38,81 +39,82 @@ function TransactionDetails() {
     }
   }, [transactionHash]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!transaction) {
-    return <div>Transaction not found</div>;
-  }
-
   // Convert BigNumber values to string for display
-  const value = transaction.value
+  const value = transaction?.value
     ? Utils.formatUnits(transaction.value, "ether")
     : "N/A";
-  const gas = transaction.gas ? transaction.gas.toString() : "N/A";
-  const gasPrice = transaction.gasPrice
+  const gas = transaction?.gas ? transaction.gas.toString() : "N/A";
+  const gasPrice = transaction?.gasPrice
     ? Utils.formatUnits(transaction.gasPrice, "gwei")
     : "N/A";
 
   return (
     <div className="home">
-      <div className="dashboard">
-        <div className="header">
-          <Link to="/" className="title-link">
-            <h1 className="title">Ethereum Insider</h1>
-          </Link>
-          <Link to="/" className="title-link">
-            <img src={logo} alt="Logo" className="logo" />
-          </Link>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="dashboard">
+          <div className="header">
+            <Link to="/" className="title-link">
+              <h1 className="title">Ethereum Insider</h1>
+            </Link>
+            <Link to="/" className="title-link">
+              <img src={logo} alt="Logo" className="logo" />
+            </Link>
+          </div>
+          <p className="subtitle">The Ethereum Blockchain Explorer</p>
+          {transaction && (
+            <>
+              <Link
+                to={`/block/${transaction.blockNumber}/transactions`}
+                className="back-link"
+              >
+                <FaArrowLeft /> Back to Transactions
+              </Link>
+              <h2>Transaction Details</h2>
+              <div className="transaction-details">
+                <p>
+                  <strong>Transaction Hash:</strong> {transaction.hash}
+                </p>
+                <p>
+                  <strong>Block Number:</strong> {transaction.blockNumber}
+                </p>
+                <p>
+                  <strong>Transaction Index:</strong>{" "}
+                  {transaction.transactionIndex}
+                </p>
+                <p>
+                  <strong>Confirmations:</strong> {transaction.confirmations}
+                </p>
+                <p>
+                  <strong>From:</strong> {transaction.from}
+                </p>
+                <p>
+                  <strong>To:</strong> {transaction.to}
+                </p>
+                <p>
+                  <strong>Value:</strong> {value} ETH
+                </p>
+                <p>
+                  <strong>Gas:</strong> {gas}
+                </p>
+                <p>
+                  <strong>Gas Price:</strong> {gasPrice} Gwei
+                </p>
+                <p>
+                  <strong>Nonce:</strong> {transaction.nonce}
+                </p>
+                <p>
+                  <strong>Chain Id:</strong> {transaction.chainId}
+                </p>
+                <p>
+                  <strong>Data:</strong> {transaction.data}
+                </p>
+              </div>
+            </>
+          )}
         </div>
-        <p className="subtitle">The Ethereum Blockchain Explorer</p>
-        <Link
-          to={`/block/${transaction.blockNumber}/transactions`}
-          className="back-link"
-        >
-          <FaArrowLeft /> Back to Transactions
-        </Link>
-        <h2>Transaction Details</h2>
-        <div className="transaction-details">
-          <p>
-            <strong>Transaction Hash:</strong> {transaction.hash}
-          </p>
-          <p>
-            <strong>Block Number:</strong> {transaction.blockNumber}
-          </p>
-          <p>
-            <strong>Transaction Index:</strong> {transaction.transactionIndex}
-          </p>
-          <p>
-            <strong>Confirmations:</strong> {transaction.confirmations}
-          </p>
-          <p>
-            <strong>From:</strong> {transaction.from}
-          </p>
-          <p>
-            <strong>To:</strong> {transaction.to}
-          </p>
-          <p>
-            <strong>Value:</strong> {value} ETH
-          </p>
-          <p>
-            <strong>Gas:</strong> {gas}
-          </p>
-          <p>
-            <strong>Gas Price:</strong> {gasPrice} Gwei
-          </p>
-          <p>
-            <strong>Nonce:</strong> {transaction.nonce}
-          </p>
-          <p>
-            <strong>Chain Id:</strong> {transaction.chainId}
-          </p>
-          <p>
-            <strong>Data:</strong> {transaction.data}
-          </p>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

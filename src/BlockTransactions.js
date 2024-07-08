@@ -18,8 +18,8 @@ function BlockTransactions() {
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); // State for error message
   const [showError, setShowError] = useState(false); // State to control error message visibility
+  const [loading, setLoading] = useState(true); // State for loading indicator
   const timerRef = useRef(null); // Ref to store the timer ID
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getBlockDetails() {
@@ -35,18 +35,15 @@ function BlockTransactions() {
       } catch (error) {
         console.error("Failed to fetch block transactions.", error);
       } finally {
-        setLoading(false);
+        setLoading(false); // Set loading to false after fetching data
       }
     }
 
     if (blockNumber) {
+      setLoading(true); // Set loading to true when blockNumber changes
       getBlockDetails();
     }
   }, [blockNumber]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -64,7 +61,6 @@ function BlockTransactions() {
         setErrorMessage(
           "You did not enter any input. Please provide the required data and try again."
         );
-        setShowError(true); // Show error message
       } else if (input.length === 42) {
         console.log("Address: ", input);
         // TODO
@@ -75,13 +71,15 @@ function BlockTransactions() {
         setErrorMessage(
           "The entered format is incorrect. Please check your input and try the search again."
         );
-        setShowError(true); // Show error message
       }
+      setShowError(true); // Show error message
     }
-    // Hide the error message after 3 seconds
+
+    // Clear the previous timer and set a new one
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
+
     timerRef.current = setTimeout(() => {
       setShowError(false);
     }, 3000);
@@ -93,6 +91,12 @@ function BlockTransactions() {
 
   return (
     <div className="home">
+      {loading && (
+        <div className="loading-container">
+          <div class="loader"></div>
+          <div className="loading-text">Loading...</div>
+        </div>
+      )}
       <div className="dashboard">
         <div className="header">
           <Link to="/" className="title-link">
@@ -117,7 +121,7 @@ function BlockTransactions() {
             </button>
           </div>
           {errorMessage && (
-            <p className={`error-message ${showError ? "" : "hide"}`}>
+            <p className={`error-message ${showError ? "show" : ""}`}>
               {errorMessage}
             </p>
           )}

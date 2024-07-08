@@ -326,6 +326,45 @@ td a {
   color: #0056b3;
 }
 
+/* <--- Loading container ---> */
+
+.loading-container {
+  position: fixed; /* Fix it to the viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background: rgba(255, 255, 255, 0.9); /* Light transparent background */
+  z-index: 1000; /* Ensure it's on top of other elements */
+}
+
+.loading-text {
+  font-size: 24px;
+  color: #000;
+}
+
+.loader {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* Remove arrows from number input */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {

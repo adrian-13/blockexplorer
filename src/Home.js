@@ -114,10 +114,6 @@ function Home() {
     };
   }, [blockNumber]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -161,6 +157,12 @@ function Home() {
 
   return (
     <div className="home">
+      {loading && (
+        <div className="loading-container">
+          <div class="loader"></div>
+          <div className="loading-text">Loading...</div>
+        </div>
+      )}
       <div className="dashboard">
         <div className="header">
           <Link to="/" className="title-link">

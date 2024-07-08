@@ -12,7 +12,7 @@ import {
   FaGasPump,
   FaExchangeAlt,
 } from "react-icons/fa";
-import "./Home.css";
+import "./Home.css"; // Ensure you are importing the correct CSS file
 import logo from "../src/assets/ethereum_logo.png";
 
 const settings = {
@@ -83,10 +83,6 @@ function BlockDetails() {
     }
   }, [blockNumber]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -131,6 +127,12 @@ function BlockDetails() {
 
   return (
     <div className="home">
+      {loading && (
+        <div className="loading-container">
+          <div class="loader"></div>
+          <div className="loading-text">Loading...</div>
+        </div>
+      )}
       <div className="dashboard">
         <div className="header">
           <Link to="/" className="title-link">
