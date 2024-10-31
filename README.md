@@ -35,7 +35,7 @@ This project was created as an assignment for a course at **Alchemy University**
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/ethereum-insider.git
+git clone https://github.com/adrian-13/blockexplorer.git
 cd ethereum-insider
 ```
 
