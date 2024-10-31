@@ -57,9 +57,7 @@ REACT_APP_ALCHEMY_API_KEY=your_alchemy_api_key
 After installing the dependencies and setting up the environment variables, start the application:
 
 ```bash
-npm install
-# or
-yarn install
+npm start
 ```
 
 The application will run on http://localhost:3000.
