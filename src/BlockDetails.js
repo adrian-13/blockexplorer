@@ -83,13 +83,16 @@ function BlockDetails() {
     }
   }, [blockNumber]);
 
+
+// Search panel 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
   const handleInputSearch = () => {
     const input = inputValue.trim();
-
+  
+    // Check if the input is numeric, indicating a block number
     if (isNumeric(input)) {
       window.location.href = `/block/${input}`;
     } else {
@@ -97,21 +100,21 @@ function BlockDetails() {
         setErrorMessage(
           "You did not enter any input. Please provide the required data and try again."
         );
-        setShowError(true); // Show error message
-      } else if (input.length === 42) {
-        console.log("Address: ", input);
-        // TODO
-      } else if (input.length === 66) {
-        console.log("Hash: ", input);
-        window.location.href = `/block/${blockNumber}/transactions/${input}`;
+        setShowError(true);
+      } else if (input.length === 42 && input.startsWith("0x")) {
+        // Redirect to the address page
+        window.location.href = `/address/${input}`; // Redirecting to address page
+      } else if (input.length === 66 && input.startsWith("0x")) {
+        // Redirect to the transaction details page
+        window.location.href = `/transaction/${input}`; // Ensure this path matches your routing
       } else {
         setErrorMessage(
           "The entered format is incorrect. Please check your input and try the search again."
         );
-        setShowError(true); // Show error message
+        setShowError(true);
       }
     }
-
+  
     // Hide the error message after 3 seconds
     if (timerRef.current) {
       clearTimeout(timerRef.current);
