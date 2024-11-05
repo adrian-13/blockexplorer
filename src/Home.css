@@ -261,6 +261,25 @@ body::-webkit-scrollbar {
   max-width: 100ch;
 }
 
+/* <--- Address Details ---> */
+.address-details {
+  padding: 20px;
+}
+
+.address-details h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.address-details p {
+  margin: 10px 0;
+  font-size: 1.1em;
+  color: #333;
+  line-height: 1.5;
+  text-align: left;
+}
+
+
 /* <--- Loading container ---> */
 .loading-container {
   position: fixed; /* Fix it to the viewport */
