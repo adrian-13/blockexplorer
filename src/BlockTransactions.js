@@ -22,6 +22,7 @@ function BlockTransactions() {
   const timerRef = useRef(null); // Ref to store the timer ID
 
   useEffect(() => {
+    document.title = 'Ethereum Insider';
     async function getBlockDetails() {
       try {
         const block = await alchemy.core.getBlockWithTransactions(
