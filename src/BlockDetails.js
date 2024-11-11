@@ -11,6 +11,7 @@ import {
   FaUser,
   FaGasPump,
   FaExchangeAlt,
+  FaArrowLeft
 } from "react-icons/fa";
 import "./Home.css"; // Ensure you are importing the correct CSS file
 import logo from "../src/assets/ethereum_logo.png";
@@ -158,13 +159,20 @@ function BlockDetails() {
             <button onClick={handleInputSearch}>
               <FaSearch className="icon" />
             </button>
+            
           </div>
           {errorMessage && (
             <p className={`error-message ${showError ? "" : "hide"}`}>
               {errorMessage}
             </p>
-          )}
+          )
+          }
+
+
         </div>
+        <Link to="/" className="back-link">
+              <FaArrowLeft /> Back to home
+            </Link>
         <h2>Block # {blockNumber}</h2>
         <div className="dashboard-content">
           {/* Block Information Group */}
