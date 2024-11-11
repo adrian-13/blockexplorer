@@ -40,6 +40,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    document.title = 'Ethereum Insider';
     let isMounted = true;
 
     async function getBlockNumberAndTimestamp() {
