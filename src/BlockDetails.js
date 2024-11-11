@@ -40,6 +40,7 @@ function BlockDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    document.title = 'Ethereum Insider';
     async function getBlockNumberAndTimestamp() {
       try {
         const currentBlock = await alchemy.core.getBlock(parseInt(blockNumber));
