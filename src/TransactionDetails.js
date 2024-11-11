@@ -26,6 +26,7 @@ function AddressDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    document.title = 'Ethereum Insider';
     async function fetchAddressData() {
       try {
         const balance = await alchemy.core.getBalance(address);
