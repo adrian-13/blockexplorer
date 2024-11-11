@@ -185,7 +185,7 @@ function Home() {
               value={inputValue}
               onChange={handleInputChange}
               className="search-box"
-              placeholder="Search by Address / Txn Hash / Block"
+              placeholder="Search by Address / Txn Hash / Block number"
             />
             <button onClick={handleInputSearch}>
               <FaSearch className="icon" />
