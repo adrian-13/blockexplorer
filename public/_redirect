@@ -1,7 +1,0 @@
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/block/:blockNumber" element={<BlockDetails />} />
-          <Route path="/block/:blockNumber/transactions" element={<BlockTransactions />} />
-          <Route path="/transaction/:transactionHash" element={<TransactionDetails />} />
-          <Route path="/address/:address" element={<AddressDetails />} />
-        </Routes>
